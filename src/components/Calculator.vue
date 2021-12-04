@@ -4,6 +4,7 @@
     <div class="form-card">
       <label>Bill</label>
       <br />
+      <img class="icon" src="../assets/icon-dollar.svg" />
       <input
         class="numInput"
         type="number"
@@ -29,6 +30,7 @@
       <br />
       <label>Number of People</label>
       <br />
+      <img class="icon" src="../assets/icon-person.svg" />
       <input
         class="numInput"
         type="number"
@@ -146,5 +148,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.icon {
+  position: absolute;
+  padding: 5px;
 }
 </style>
