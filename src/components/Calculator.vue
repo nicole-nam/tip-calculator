@@ -14,19 +14,22 @@
       />
       <br />
       <label>Select Tip %</label>
-      <div class="grid">
-        <input type="button" value="5%" />
-        <input type="button" value="10%" />
-        <input type="button" value="15%" />
-        <input type="button" value="25%" />
-        <input type="button" value="50%" />
-        <input
-          class="custom-btn"
-          type="number"
-          v-model="custom"
-          placeholder="custom"
-        />
+      <div v-for="amount in amounts" :key="amount.index" class="grid">
+        {{ amount.isActive }}
+        <button
+          :class="{ active: amount.isActive, notActive: !amount.isActive }"
+          @click="selected(amount.index)"
+          type="button"
+        >
+          {{ amount.text }}
+        </button>
       </div>
+      <input
+        class="custom-btn"
+        type="number"
+        v-model="custom"
+        placeholder="custom"
+      />
       <br />
       <label>Number of People</label>
       <br />
@@ -62,7 +65,44 @@ export default {
       bill: null,
       people: null,
       custom: null,
+      amounts: [
+        {
+          index: 0,
+          value: 5,
+          text: "5%",
+          isActive: false,
+        },
+        {
+          index: 1,
+          value: 10,
+          text: "10%",
+          isActive: false,
+        },
+        {
+          index: 2,
+          value: 15,
+          text: "15%",
+          isActive: false,
+        },
+        {
+          index: 3,
+          value: 25,
+          text: "25%",
+          isActive: false,
+        },
+        {
+          index: 4,
+          value: 50,
+          text: "50%",
+          isActive: true,
+        },
+      ],
     };
+  },
+  methods: {
+    selected(i) {
+      console.log(i);
+    },
   },
 };
 </script>
@@ -111,14 +151,6 @@ p {
   color: hsl(183, 100%, 15%);
 }
 
-input[type="button"] {
-  background-color: hsl(183, 100%, 15%);
-  border: hsl(183, 100%, 15%);
-  border-radius: 3px;
-  color: #fff;
-  padding: 5px 10px;
-}
-
 .custom-btn {
   background-color: hsl(189, 41%, 97%);
   border: hsl(183, 100%, 15%);
@@ -153,5 +185,21 @@ input[type="number"] {
 .icon {
   position: absolute;
   padding: 5px;
+}
+
+.active {
+  background-color: hsl(184, 14%, 56%);
+  border: hsl(184, 14%, 56%);
+  border-radius: 3px;
+  color: hsl(183, 100%, 15%);
+  padding: 5px 10px;
+}
+
+.notActive {
+  background-color: hsl(183, 100%, 15%);
+  border: hsl(183, 100%, 15%);
+  border-radius: 3px;
+  color: #fff;
+  padding: 5px 10px;
 }
 </style>
