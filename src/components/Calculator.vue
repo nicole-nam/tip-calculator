@@ -14,22 +14,25 @@
       />
       <br />
       <label>Select Tip %</label>
-      <div v-for="amount in amounts" :key="amount.index" class="grid">
-        {{ amount.isActive }}
-        <button
-          :class="{ active: amount.isActive, notActive: !amount.isActive }"
-          @click="selected(amount.index)"
-          type="button"
-        >
-          {{ amount.text }}
-        </button>
+      <div class="grid">
+        <div v-for="amount in amounts" :key="amount.index">
+          <input
+            v-if="amount.text == 'amount'"
+            class="custom-btn"
+            :placeholder="amount.value"
+            @click="selected(amount.index)"
+            type="number"
+            required
+          />
+          <input
+            v-else
+            type="button"
+            :class="{ active: amount.isActive, notActive: !amount.isActive }"
+            @click="selected(amount.index)"
+            :value="amount.text"
+          />
+        </div>
       </div>
-      <input
-        class="custom-btn"
-        type="number"
-        v-model="custom"
-        placeholder="custom"
-      />
       <br />
       <label>Number of People</label>
       <br />
@@ -64,7 +67,7 @@ export default {
     return {
       bill: null,
       people: null,
-      custom: null,
+      custom: "Custom",
       amounts: [
         {
           index: 0,
@@ -94,7 +97,13 @@ export default {
           index: 4,
           value: 50,
           text: "50%",
-          isActive: true,
+          isActive: false,
+        },
+        {
+          index: 5,
+          value: "custom",
+          text: "amount",
+          isActive: false,
         },
       ],
     };
@@ -184,11 +193,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 .icon {
   position: absolute;
   padding: 5px;
@@ -200,6 +204,7 @@ input[type="number"] {
   border-radius: 3px;
   color: hsl(183, 100%, 15%);
   padding: 5px 10px;
+  width: 100%;
 }
 
 .notActive {
@@ -208,5 +213,6 @@ input[type="number"] {
   border-radius: 3px;
   color: #fff;
   padding: 5px 10px;
+  width: 100%;
 }
 </style>
