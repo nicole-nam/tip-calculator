@@ -100,8 +100,15 @@ export default {
     };
   },
   methods: {
-    selected(i) {
-      console.log(i);
+    selected(t) {
+      console.log(t);
+      for (let i = 0; i < this.amounts.length; i++) {
+        if (this.amounts[i].index == t) {
+          this.amounts[i].isActive = true;
+        } else {
+          this.amounts[i].isActive = false;
+        }
+      }
     },
   },
 };
