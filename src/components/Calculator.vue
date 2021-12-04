@@ -1,5 +1,6 @@
 <template>
   <div>Tip Calculator</div>
+  {{ bill }}:{{ custom }}:{{ people }}
   <div class="card">
     <div class="form-card">
       <label>Bill</label>
@@ -21,6 +22,7 @@
             class="custom-btn"
             :placeholder="amount.value"
             @click="selected(amount.index)"
+            v-model="custom"
             type="number"
             required
           />
@@ -28,7 +30,7 @@
             v-else
             type="button"
             :class="{ active: amount.isActive, notActive: !amount.isActive }"
-            @click="selected(amount.index)"
+            @click="selected(amount.index, amount.value)"
             :value="amount.text"
           />
         </div>
@@ -42,19 +44,30 @@
         type="number"
         v-model="people"
         placeholder="0"
+        v-on:keyup="tipAmount"
         required
       />
     </div>
     <div class="tip-card">
-      <div class="margin-bottom">
-        <p>Tip Amount</p>
-        <p>/person</p>
+      <div class="margin-bottom flex">
+        <div>
+          <p>Tip Amount</p>
+          <p>/person</p>
+        </div>
+        <div class="totalAmount" v-if="this.tipPerPerson !== undefined">
+          $ {{ tipPerPerson }}
+        </div>
       </div>
-      <div>
-        <p>Total</p>
-        <p>/person</p>
+      <div class="flex">
+        <div>
+          <p>Total</p>
+          <p>/person</p>
+        </div>
+        <div class="totalAmount" v-if="this.totalPerPerson !== undefined">
+          $ {{ totalPerPerson }}
+        </div>
       </div>
-      <button class="resetBtn">Reset</button>
+      <button class="resetBtn" @click="reset()">Reset</button>
     </div>
   </div>
 </template>
@@ -68,6 +81,9 @@ export default {
       bill: null,
       people: null,
       custom: "Custom",
+      tipPerPerson: "0.00",
+      totalPerPerson: "0.00",
+      tipSelected: null,
       amounts: [
         {
           index: 0,
@@ -109,8 +125,16 @@ export default {
     };
   },
   methods: {
-    selected(t) {
-      console.log(t);
+    reset() {
+      this.bill = null;
+      this.people = null;
+      this.custom = "Custom";
+      this.tipPerPerson = "0.00";
+      this.totalPerPerson = "0.00";
+      this.tipSelected = null;
+    },
+    selected(t, v) {
+      this.tipSelected = v;
       for (let i = 0; i < this.amounts.length; i++) {
         if (this.amounts[i].index == t) {
           this.amounts[i].isActive = true;
@@ -118,6 +142,12 @@ export default {
           this.amounts[i].isActive = false;
         }
       }
+    },
+    tipAmount() {
+      var tipAmount = this.tipSelected / 100;
+      var perPerson = (this.bill * tipAmount) / this.people;
+      this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
+      this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
     },
   },
 };
@@ -141,6 +171,11 @@ export default {
   margin: auto;
   padding: 20px;
   text-align: left;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 
 p {
@@ -214,5 +249,9 @@ input::-webkit-inner-spin-button {
   color: #fff;
   padding: 5px 10px;
   width: 100%;
+}
+
+.totalAmount {
+  color: hsl(185, 41%, 84%);
 }
 </style>
