@@ -57,7 +57,7 @@
           <p class="bold-font">Tip Amount</p>
           <p class="light-font">/person</p>
         </div>
-        <div class="totalAmount" v-if="this.tipPerPerson !== undefined">
+        <div class="totalAmount" v-if="this.tipPerPerson">
           $ {{ tipPerPerson }}
         </div>
       </div>
@@ -66,7 +66,7 @@
           <p class="bold-font">Total</p>
           <p class="light-font">/person</p>
         </div>
-        <div class="totalAmount" v-if="this.totalPerPerson !== undefined">
+        <div class="totalAmount" v-if="this.totalPerPerson">
           $ {{ totalPerPerson }}
         </div>
       </div>
@@ -161,18 +161,19 @@ export default {
       }
     },
     tipAmount() {
+      console.log(this.bill, this.custom, this.tipSelected, this.people);
+
       if (this.custom) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
         this.tipPerPerson = ((this.bill * customTip) / this.people).toFixed(2);
         this.totalPerPerson = (this.bill / this.people + per).toFixed(2);
-      } else {
+      } else if (this.bill && this.tipSelected && this.people) {
         var tipAmount = this.tipSelected / 100;
         var perPerson = (this.bill * tipAmount) / this.people;
         this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
         this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
       }
-
       this.disabled = false;
     },
   },
