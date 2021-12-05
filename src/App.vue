@@ -16,7 +16,9 @@ export default {
 </script>
 
 <style>
-html {
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+html,
+body {
   background-color: hsl(189, 41%, 97%);
 }
 #app {
@@ -26,5 +28,6 @@ html {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-family: "Space Mono", monospace;
 }
 </style>
