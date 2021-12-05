@@ -2,54 +2,60 @@
   <div>Tip Calculator</div>
   <div class="card">
     <div class="form-card">
-      <label>Bill</label>
-      <br />
-      <img class="icon" src="../assets/icon-dollar.svg" />
-      <input
-        class="numInput"
-        type="number"
-        v-model="bill"
-        placeholder="0"
-        v-on:keyup="tipAmount"
-        required
-      />
-      <br />
-      <label>Select Tip %</label>
-      <div class="grid">
-        <div v-for="amount in amounts" :key="amount.index">
-          <input
-            v-if="amount.text == 'amount'"
-            class="custom-btn"
-            :placeholder="amount.value"
-            v-model="custom"
-            @click="selected(amount.index)"
-            type="number"
-            required
-          />
-          <input
-            v-else
-            type="button"
-            :class="{ active: amount.isActive, notActive: !amount.isActive }"
-            @click="selected(amount.index, amount.value)"
-            :value="amount.text"
-          />
-        </div>
+      <div class="bill">
+        <label>Bill</label>
+        <br />
+        <img class="icon" src="../assets/icon-dollar.svg" />
+        <input
+          class="numInput"
+          type="number"
+          v-model="bill"
+          placeholder="0"
+          v-on:keyup="tipAmount"
+          required
+        />
+        <br />
       </div>
-      <br />
-      <label
-        >Number of People
-        <span v-if="people == null" class="zero">Can't be zero</span></label
-      >
-      <br />
-      <img class="icon" src="../assets/icon-person.svg" />
-      <input
-        :class="{ numPeople: !people, numInput: people }"
-        type="number"
-        v-model="people"
-        placeholder="0"
-        v-on:keyup="tipAmount"
-        required
-      />
+      <div class="select-tip">
+        <label>Select Tip %</label>
+        <div class="grid">
+          <div v-for="amount in amounts" :key="amount.index">
+            <input
+              v-if="amount.text == 'amount'"
+              class="custom-btn"
+              :placeholder="amount.value"
+              v-model="custom"
+              @click="selected(amount.index)"
+              type="number"
+              required
+            />
+            <input
+              v-else
+              type="button"
+              :class="{ active: amount.isActive, notActive: !amount.isActive }"
+              @click="selected(amount.index, amount.value)"
+              :value="amount.text"
+            />
+          </div>
+        </div>
+        <br />
+      </div>
+      <div>
+        <label
+          >Number of People
+          <span v-if="people == null" class="zero">Can't be zero</span></label
+        >
+        <br />
+        <img class="icon" src="../assets/icon-person.svg" />
+        <input
+          :class="{ numPeople: !people, numInput: people }"
+          type="number"
+          v-model="people"
+          placeholder="0"
+          v-on:keyup="tipAmount"
+          required
+        />
+      </div>
     </div>
     <div class="tip-card">
       <div class="margin-bottom flex">
@@ -183,21 +189,28 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: #fff;
   border-radius: 5px;
-  width: 50%;
+  width: 550px;
   margin: 100px auto;
   padding: 20px;
   text-align: left;
   display: flex;
+  justify-content: space-between;
   gap: 30px;
 }
 
 .tip-card {
   background-color: hsl(183, 100%, 15%);
   border-radius: 5px;
-  width: 40%;
-  margin: auto;
+  width: 50%;
   padding: 20px;
   text-align: left;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
 }
 
 .flex {
@@ -230,18 +243,6 @@ p {
   cursor: pointer;
 }
 
-.custom-btn {
-  background-color: hsl(189, 41%, 97%);
-  border: hsl(183, 100%, 15%);
-  border-radius: 3px;
-  color: hsl(183, 100%, 15%);
-  padding: 5px 10px;
-  width: 50px;
-  margin: 0;
-  text-align: center;
-  cursor: pointer;
-}
-
 .numInput {
   margin-bottom: 20px;
   text-align: right;
@@ -250,7 +251,7 @@ p {
   border-radius: 3px;
   padding: 5px 20px;
   width: 80%;
-  cursor:pointer
+  cursor: pointer;
 }
 
 .numPeople {
@@ -281,8 +282,8 @@ input::-webkit-inner-spin-button {
   border-radius: 3px;
   color: hsl(183, 100%, 15%);
   padding: 5px 10px;
-  width: 100%;
   cursor: pointer;
+  width: 100%;
 }
 
 .notActive {
@@ -291,8 +292,19 @@ input::-webkit-inner-spin-button {
   border-radius: 3px;
   color: #fff;
   padding: 5px 10px;
-  width: 100%;
   cursor: pointer;
+  width: 100%;
+}
+
+.custom-btn {
+  background-color: hsl(189, 41%, 97%);
+  border: hsl(183, 100%, 15%);
+  border-radius: 3px;
+  color: hsl(183, 100%, 15%);
+  padding: 5px 10px;
+  text-align: center;
+  cursor: pointer;
+  width: 75%;
 }
 
 .totalAmount {
