@@ -1,6 +1,5 @@
 <template>
   <div>Tip Calculator</div>
-  {{ bill }}:{{ custom }}:{{ people }}
   <div class="card">
     <div class="form-card">
       <label>Bill</label>
@@ -22,7 +21,6 @@
             class="custom-btn"
             :placeholder="amount.value"
             @click="selected(amount.index)"
-            v-model="custom"
             type="number"
             required
           />
@@ -132,6 +130,9 @@ export default {
       this.tipPerPerson = "0.00";
       this.totalPerPerson = "0.00";
       this.tipSelected = null;
+      for (let i = 0; i < this.amounts.length; i++) {
+        this.amounts[i].isActive = false;
+      }
     },
     selected(t, v) {
       this.tipSelected = v;
@@ -156,6 +157,7 @@ export default {
 <style scoped>
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
   border-radius: 5px;
   width: 50%;
   margin: 100px auto;
