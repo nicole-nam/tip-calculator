@@ -20,6 +20,7 @@
             v-if="amount.text == 'amount'"
             class="custom-btn"
             :placeholder="amount.value"
+            v-model="custom"
             @click="selected(amount.index)"
             type="number"
             required
@@ -34,11 +35,14 @@
         </div>
       </div>
       <br />
-      <label>Number of People</label>
+      <label
+        >Number of People
+        <span v-if="people == null" class="zero">Can't be zero</span></label
+      >
       <br />
       <img class="icon" src="../assets/icon-person.svg" />
       <input
-        class="numInput"
+        :class="{ numPeople: !people, numInput: people }"
         type="number"
         v-model="people"
         placeholder="0"
@@ -49,8 +53,8 @@
     <div class="tip-card">
       <div class="margin-bottom flex">
         <div>
-          <p>Tip Amount</p>
-          <p>/person</p>
+          <p class="bold-font">Tip Amount</p>
+          <p class="light-font">/person</p>
         </div>
         <div class="totalAmount" v-if="this.tipPerPerson !== undefined">
           $ {{ tipPerPerson }}
@@ -58,8 +62,8 @@
       </div>
       <div class="flex">
         <div>
-          <p>Total</p>
-          <p>/person</p>
+          <p class="bold-font">Total</p>
+          <p class="light-font">/person</p>
         </div>
         <div class="totalAmount" v-if="this.totalPerPerson !== undefined">
           $ {{ totalPerPerson }}
@@ -88,7 +92,7 @@ export default {
       disabled: true,
       bill: null,
       people: null,
-      custom: "Custom",
+      custom: null,
       tipPerPerson: "0.00",
       totalPerPerson: "0.00",
       tipSelected: null,
@@ -156,10 +160,18 @@ export default {
       }
     },
     tipAmount() {
-      var tipAmount = this.tipSelected / 100;
-      var perPerson = (this.bill * tipAmount) / this.people;
-      this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
-      this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
+      console.log("custom amount", this.custom);
+      if (this.custom) {
+        var customTip = this.custom / 100;
+        var per = (this.bill * customTip) / this.people;
+        this.tipPerPerson = ((this.bill * customTip) / this.people).toFixed(2);
+        this.totalPerPerson = (this.bill / this.people + per).toFixed(2);
+      } else {
+        var tipAmount = this.tipSelected / 100;
+        var perPerson = (this.bill * tipAmount) / this.people;
+        this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
+        this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
+      }
       this.disabled = false;
     },
   },
@@ -231,9 +243,20 @@ p {
   margin-bottom: 20px;
   text-align: right;
   background-color: hsl(189, 41%, 97%);
-  border: hsl(189, 41%, 97%);
+  border: #fff;
   border-radius: 3px;
   padding: 5px 20px;
+  width: 80%;
+}
+
+.numPeople {
+  margin-bottom: 20px;
+  text-align: right;
+  background-color: hsl(189, 41%, 97%);
+  border: 1px solid rgb(255, 81, 0);
+  border-radius: 3px;
+  padding: 5px 20px;
+  width: 80%;
 }
 
 input::-webkit-outer-spin-button,
@@ -266,11 +289,26 @@ input::-webkit-inner-spin-button {
 }
 
 .totalAmount {
-  color: hsl(185, 41%, 84%);
+  color: hsl(172, 67%, 45%);
+  font-weight: 900;
 }
 
 .disable {
   background-color: hsl(186, 42%, 59%);
   opacity: 0.5;
+}
+
+.zero {
+  color: rgb(255, 81, 0);
+  font-size: 12px;
+}
+
+.light-font {
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+.bold-font {
+  font-weight: 700;
 }
 </style>
