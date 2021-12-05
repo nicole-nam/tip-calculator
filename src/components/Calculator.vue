@@ -204,6 +204,9 @@ export default {
   width: 50%;
   padding: 20px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .form-card {
@@ -235,12 +238,12 @@ p {
 
 .resetBtn {
   width: 100%;
-  margin-top: 20px;
   background-color: hsl(186, 42%, 59%);
   border: hsl(186, 42%, 59%);
   border-radius: 3px;
   color: hsl(183, 100%, 15%);
   cursor: pointer;
+  padding: 7px;
 }
 
 .numInput {
@@ -315,11 +318,13 @@ input::-webkit-inner-spin-button {
 .disable {
   background-color: hsl(186, 42%, 59%);
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .zero {
   color: rgb(255, 81, 0);
-  font-size: 12px;
+  font-size: 10px;
+  margin-left: 25px;
 }
 
 .light-font {
@@ -329,5 +334,9 @@ input::-webkit-inner-spin-button {
 
 .bold-font {
   font-weight: 700;
+}
+
+label {
+  font-size: 12px;
 }
 </style>
