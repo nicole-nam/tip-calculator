@@ -10,6 +10,7 @@
         type="number"
         v-model="bill"
         placeholder="0"
+        v-on:keyup="tipAmount"
         required
       />
       <br />
@@ -140,7 +141,7 @@ export default {
     reset() {
       this.bill = null;
       this.people = null;
-      this.custom = "Custom";
+      this.custom = null;
       this.tipPerPerson = "0.00";
       this.totalPerPerson = "0.00";
       this.tipSelected = null;
@@ -160,7 +161,6 @@ export default {
       }
     },
     tipAmount() {
-      console.log("custom amount", this.custom);
       if (this.custom) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
@@ -172,6 +172,7 @@ export default {
         this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
         this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
       }
+
       this.disabled = false;
     },
   },
