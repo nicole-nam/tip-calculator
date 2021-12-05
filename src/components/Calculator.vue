@@ -161,8 +161,6 @@ export default {
       }
     },
     tipAmount() {
-      console.log(this.bill, this.custom, this.tipSelected, this.people);
-
       if (this.custom) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
