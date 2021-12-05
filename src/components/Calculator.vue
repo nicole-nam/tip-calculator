@@ -190,6 +190,7 @@ export default {
   display: flex;
   gap: 30px;
 }
+
 .tip-card {
   background-color: hsl(183, 100%, 15%);
   border-radius: 5px;
@@ -226,6 +227,7 @@ p {
   border: hsl(186, 42%, 59%);
   border-radius: 3px;
   color: hsl(183, 100%, 15%);
+  cursor: pointer;
 }
 
 .custom-btn {
@@ -237,6 +239,7 @@ p {
   width: 50px;
   margin: 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .numInput {
@@ -247,6 +250,7 @@ p {
   border-radius: 3px;
   padding: 5px 20px;
   width: 80%;
+  cursor:pointer
 }
 
 .numPeople {
@@ -257,6 +261,7 @@ p {
   border-radius: 3px;
   padding: 5px 20px;
   width: 80%;
+  cursor: pointer;
 }
 
 input::-webkit-outer-spin-button,
@@ -277,6 +282,7 @@ input::-webkit-inner-spin-button {
   color: hsl(183, 100%, 15%);
   padding: 5px 10px;
   width: 100%;
+  cursor: pointer;
 }
 
 .notActive {
@@ -286,6 +292,7 @@ input::-webkit-inner-spin-button {
   color: #fff;
   padding: 5px 10px;
   width: 100%;
+  cursor: pointer;
 }
 
 .totalAmount {
