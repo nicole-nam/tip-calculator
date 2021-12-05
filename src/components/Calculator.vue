@@ -65,7 +65,16 @@
           $ {{ totalPerPerson }}
         </div>
       </div>
-      <button class="resetBtn" @click="reset()">Reset</button>
+      <button
+        v-if="disabled"
+        :class="{ disable: disabled }"
+        class="resetBtn"
+        @click="reset()"
+        disabled
+      >
+        Reset
+      </button>
+      <button v-else class="resetBtn" @click="reset()">Reset</button>
     </div>
   </div>
 </template>
@@ -76,6 +85,7 @@ export default {
   props: {},
   data() {
     return {
+      disabled: true,
       bill: null,
       people: null,
       custom: "Custom",
@@ -130,6 +140,7 @@ export default {
       this.tipPerPerson = "0.00";
       this.totalPerPerson = "0.00";
       this.tipSelected = null;
+      this.disabled = true;
       for (let i = 0; i < this.amounts.length; i++) {
         this.amounts[i].isActive = false;
       }
@@ -149,6 +160,7 @@ export default {
       var perPerson = (this.bill * tipAmount) / this.people;
       this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
       this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
+      this.disabled = false;
     },
   },
 };
@@ -255,5 +267,10 @@ input::-webkit-inner-spin-button {
 
 .totalAmount {
   color: hsl(185, 41%, 84%);
+}
+
+.disable {
+  background-color: hsl(186, 42%, 59%);
+  opacity: 0.5;
 }
 </style>
