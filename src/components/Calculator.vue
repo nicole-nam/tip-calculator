@@ -20,7 +20,7 @@
         <br />
       </div>
       <div class="select-tip">
-        <label>Select Tip %</label>
+        <label>Select Tip % {{ custom }}</label>
         <div class="grid">
           <div v-for="amount in amounts" :key="amount.index">
             <input
@@ -28,7 +28,7 @@
               class="custom-btn"
               :placeholder="amount.value"
               v-model="custom"
-              @click="selected(amount.index)"
+              v-on:keyup="tipAmount"
               type="number"
               required
             />
@@ -159,6 +159,8 @@ export default {
       }
     },
     selected(t, v) {
+      this.custom = null;
+
       this.tipSelected = v;
       for (let i = 0; i < this.amounts.length; i++) {
         if (this.amounts[i].index == t) {
@@ -170,17 +172,28 @@ export default {
       this.tipAmount();
     },
     tipAmount() {
-      console.log("now selected", this.tipSelected);
-      if (this.custom) {
+      console.log(
+        "detected",
+        this.custom,
+        this.bill,
+        this.people,
+        this.tipSelected
+      );
+      if (this.custom && this.bill && this.people) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
         this.tipPerPerson = ((this.bill * customTip) / this.people).toFixed(2);
         this.totalPerPerson = (this.bill / this.people + per).toFixed(2);
+        this.tipSelected = null;
+        for (let i = 0; i < this.amounts.length; i++) {
+          this.amounts[i].isActive = false;
+        }
       } else if (this.bill && this.tipSelected && this.people) {
         var tipAmount = this.tipSelected / 100;
         var perPerson = (this.bill * tipAmount) / this.people;
         this.tipPerPerson = ((this.bill * tipAmount) / this.people).toFixed(2);
         this.totalPerPerson = (this.bill / this.people + perPerson).toFixed(2);
+        this.custom = null;
       }
       this.disabled = false;
     },
