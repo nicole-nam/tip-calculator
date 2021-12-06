@@ -20,7 +20,7 @@
         <br />
       </div>
       <div class="select-tip">
-        <label>Select Tip % {{ custom }}</label>
+        <label>Select Tip %</label>
         <div class="grid">
           <div v-for="amount in amounts" :key="amount.index">
             <input
@@ -172,13 +172,6 @@ export default {
       this.tipAmount();
     },
     tipAmount() {
-      console.log(
-        "detected",
-        this.custom,
-        this.bill,
-        this.people,
-        this.tipSelected
-      );
       if (this.custom && this.bill && this.people) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
