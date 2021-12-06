@@ -167,8 +167,10 @@ export default {
           this.amounts[i].isActive = false;
         }
       }
+      this.tipAmount();
     },
     tipAmount() {
+      console.log("now selected", this.tipSelected);
       if (this.custom) {
         var customTip = this.custom / 100;
         var per = (this.bill * customTip) / this.people;
