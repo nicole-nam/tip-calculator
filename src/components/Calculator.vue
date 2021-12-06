@@ -3,11 +3,14 @@
   <div class="card">
     <div class="form-card">
       <div class="bill">
-        <label>Bill</label>
-        <br />
+        <div class="zero">
+          <label>Bill </label>
+          <span v-if="bill == null">Can't be zero</span>
+        </div>
         <img class="icon" src="../assets/icon-dollar.svg" />
         <input
           class="numInput"
+          :class="{ numPeople: !bill, numInput: bill }"
           type="number"
           v-model="bill"
           placeholder="0"
@@ -41,11 +44,10 @@
         <br />
       </div>
       <div>
-        <label
-          >Number of People
-          <span v-if="people == null" class="zero">Can't be zero</span></label
-        >
-        <br />
+        <div class="zero">
+          <label>Number of People </label>
+          <span v-if="people == null">Can't be zero</span>
+        </div>
         <img class="icon" src="../assets/icon-person.svg" />
         <input
           :class="{ numPeople: !people, numInput: people }"
@@ -324,7 +326,9 @@ input::-webkit-inner-spin-button {
 .zero {
   color: rgb(255, 81, 0);
   font-size: 10px;
-  margin-left: 25px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
 }
 
 .light-font {
@@ -338,5 +342,6 @@ input::-webkit-inner-spin-button {
 
 label {
   font-size: 12px;
+  color: hsl(184, 14%, 56%);
 }
 </style>
